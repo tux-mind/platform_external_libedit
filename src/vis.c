@@ -132,6 +132,10 @@ CTASSERT(MB_LEN_MAX <= sizeof(uint64_t));
 #endif /* !__NetBSD__ */
 #endif
 
+#ifndef NBBY
+#define NBBY 8
+#endif
+
 /*
  * This is do_hvis, for HTTP style (RFC 1808)
  */

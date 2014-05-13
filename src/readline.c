@@ -1704,6 +1704,9 @@ char *
 username_completion_function(const char *text, int state)
 {
 	struct passwd *pass = NULL;
+#ifdef __BIONIC__
+	register uid_t id;
+#endif
 
 	if (text[0] == '\0')
 		return NULL;
@@ -1711,6 +1714,13 @@ username_completion_function(const char *text, int state)
 	if (*text == '~')
 		text++;
 
+#ifdef __BIONIC__
+	// cannot get all uids on the machine and cannot
+	// cycle trought users...we have to bruteforce that...
+	pass=getpwuid((uid_t)0);
+	for(id=1;id<UID_MAX && (pass==NULL || text[0] != pass->pw_name[0] || strcmp(text,pass->pw_name) != 0);id++)
+					pass=getpwuid(id);
+#else
 	if (state == 0)
 		setpwent();
 
@@ -1720,6 +1730,7 @@ username_completion_function(const char *text, int state)
 	    && strcmp(text, pass->pw_name) == 0)
 		continue;
 
+#endif
 	if (pass == NULL) {
 		endpwent();
 		return NULL;

@@ -41,7 +41,7 @@ __RCSID("$NetBSD: el.c,v 1.72 2013/01/22 20:23:21 christos Exp $");
 #endif
 #endif /* not lint && not SCCSID */
 
-#ifndef MAXPATHLEN
+#if !defined(MAXPATHLEN) && !defined(__BIONIC__)
 #define MAXPATHLEN 4096
 #endif
 
@@ -55,7 +55,9 @@ __RCSID("$NetBSD: el.c,v 1.72 2013/01/22 20:23:21 christos Exp $");
 #include <stdarg.h>
 #include <ctype.h>
 #include <locale.h>
+#ifndef __BIONIC__
 #include <langinfo.h>
+#endif
 #include "el.h"
 
 #ifndef HAVE_SECURE_GETENV

@@ -124,7 +124,11 @@ typedef unsigned int	u_int32_t;
 #endif
 
 #ifndef SIZE_T_MAX
+#if defined(__BIONIC__) && !defined(_LIMITS_H_)
+#include <limits.h>
+#else
 #define SIZE_T_MAX	((size_t)-1)
+#endif
 #endif
 
 #define	REGEX		/* Use POSIX.2 regular expression functions */

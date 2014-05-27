@@ -136,6 +136,11 @@ CTASSERT(MB_LEN_MAX <= sizeof(uint64_t));
 #define NBBY 8
 #endif
 
+#if defined(ANDROID) || defined(__BIONIC__)
+#define wctomb(s,wc) wcrtomb(s,wc,NULL)
+#define mbtowc(pwc,s,n) mbrtowc(pwc,s,n,NULL)
+#endif
+
 /*
  * This is do_hvis, for HTTP style (RFC 1808)
  */

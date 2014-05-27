@@ -57,6 +57,9 @@ LOCAL_SRC_FILES:= \
 	src/unvis.c
 	
 LOCAL_SRC_FILES += $(GENERATED_SRCS)
+
+LOCAL_STATIC_LIBRARIES:= \
+	ncurses
 	
 LOCAL_MODULE := libedit
 
